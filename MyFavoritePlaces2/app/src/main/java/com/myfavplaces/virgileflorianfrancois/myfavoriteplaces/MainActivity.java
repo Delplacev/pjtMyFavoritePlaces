@@ -16,9 +16,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().setLogo(R.drawable.ic_marker);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_marker); //Ajout d'une icone à l'action bar
+        getSupportActionBar().setDisplayUseLogoEnabled(true); // logo actif
+        getSupportActionBar().setDisplayShowHomeEnabled(true); // activation de la fleche retour
 
         btnAddPlace = (Button)findViewById(R.id.btnAddPlace);
         btnShowPlace = (Button)findViewById(R.id.btnShowPlace);

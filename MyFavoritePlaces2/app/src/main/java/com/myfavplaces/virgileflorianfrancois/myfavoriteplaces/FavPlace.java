@@ -60,9 +60,7 @@ public class FavPlace {
         this.idFavPlace = idFavPlace;
     }
 
-    public void setAdresseFavPlace(String adresseFavPlace) {
-        this.adresseFavPlace = adresseFavPlace;
-    }
+    public void setAdresseFavPlace(String adresseFavPlace) { this.adresseFavPlace = adresseFavPlace;}
 
     public void setCPAdresse(int CPAdresse) {
         this.CPAdresse = CPAdresse;
@@ -76,9 +74,7 @@ public class FavPlace {
         this.latitude = latitude;
     }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
+    public void setLongitude(Double longitude) {this.longitude = longitude;}
 
     public void setDescription(String description) {
         this.description = description;

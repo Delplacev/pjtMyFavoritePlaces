@@ -3,6 +3,8 @@ package com.myfavplaces.virgileflorianfrancois.myfavoriteplaces;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,6 +63,8 @@ public class AddFavPlace extends AppCompatActivity implements
         datasource = new FavPlaceDataSource(this);
         datasource.open();
 
+        btnCurrentPlace.setEnabled(false);
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -75,7 +80,8 @@ public class AddFavPlace extends AppCompatActivity implements
 
 
                 FavPlace comment = null;
-                comment = datasource.createComment(edtAdresse.getText().toString(), edtVille.getText().toString(), Integer.valueOf(edtCP.getText().toString()), 56.98, 43.98, edtDescr.getText().toString(), formattedDate);
+                LatLng pos = getLocationFromAddress(edtAdresse.getText().toString() +" "+ edtVille.getText().toString() +"" + edtCP.getText().toString()); // récupération lat&long par apport a l'adresse
+                comment = datasource.createComment(edtAdresse.getText().toString(), edtVille.getText().toString(), Integer.valueOf(edtCP.getText().toString()), pos.latitude, pos.longitude, edtDescr.getText().toString(), formattedDate);
                 count++;
                 Toast toast = Toast.makeText(getApplicationContext(), "ajout", Toast.LENGTH_LONG);
                 toast.show();
@@ -115,7 +121,7 @@ public class AddFavPlace extends AppCompatActivity implements
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         if (location == null) {
-            // Blank for a moment...
+
         }
         else {
             handleNewLocation(location);
@@ -123,8 +129,13 @@ public class AddFavPlace extends AppCompatActivity implements
     }
 
     private void handleNewLocation(Location location) {
-        Log.d(TAG, location.toString());
-        currentPos = location;
+        if(location == null){
+            btnCurrentPlace.setEnabled(false);
+        } else {
+            btnCurrentPlace.setEnabled(true);
+            Log.d(TAG, location.toString());
+            currentPos = location; // Mise à jour de la position actuel
+        }
 
     }
 
@@ -149,6 +160,31 @@ public class AddFavPlace extends AppCompatActivity implements
     }
 
 
+    // Fonction qui récupère lat & long avec l'adresse , ville et CP
+    public LatLng getLocationFromAddress(String strAddress) {
+
+        Geocoder coder = new Geocoder(this);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+
+        return p1;
+    }
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
