@@ -10,6 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
     Button btnAddPlace;
     Button btnShowPlace;
+    Button btnPower;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnAddPlace = (Button)findViewById(R.id.btnAddPlace);
         btnShowPlace = (Button)findViewById(R.id.btnShowPlace);
+        btnPower = (Button)findViewById(R.id.btnPower);
 
         btnAddPlace.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +38,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btnPower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                System.exit(0);
             }
         });
 
