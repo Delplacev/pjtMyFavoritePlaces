@@ -38,8 +38,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/btnShowPlace"
         android:layout_alignEnd="@+id/btnShowPlace"
-        android:layout_below="@+id/btnShowPlace"
-        android:layout_above="@+id/btnPower" />
+        android:layout_above="@+id/btnPower"
+        android:layout_below="@+id/btnListeFav" />
 
     <Button
         android:layout_width="wrap_content"
@@ -52,4 +52,16 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/fragmentMaps"
         android:layout_alignEnd="@+id/fragmentMaps" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Afficher la liste"
+        android:id="@+id/btnListeFav"
+        android:drawableLeft="@drawable/ic_list"
+        android:layout_below="@+id/btnShowPlace"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btnShowPlace"
+        android:layout_alignEnd="@+id/btnShowPlace" />
 </RelativeLayout>

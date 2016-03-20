@@ -42,7 +42,7 @@ public class FragmentShowFavPlaces extends Fragment {
         datasource = new FavPlaceDataSource(getActivity());
         datasource.open();
 
-        List<FavPlace> values = datasource.getAllComments();
+        List<FavPlace> values = datasource.getAllFavPlaces("");
 
         this.l = new ArrayList(Arrays.asList(new FavPlace[]{}));
         for(int i=0; i<values.size(); i++) {
@@ -61,7 +61,7 @@ public class FragmentShowFavPlaces extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 FavPlace favPlace = null;
                 favPlace = (FavPlace) listAddr.getAdapter().getItem(i);
-                datasource.deleteComment(favPlace);
+                datasource.deleteFavPlace(favPlace);
                 Monadapter.remove(favPlace);
                 Monadapter.notifyDataSetChanged();
             }

@@ -26,7 +26,7 @@
         android:id="@+id/editTextAdresse"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Adresse" />
+        android:hint="Adresse" />
 
     <EditText
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
         android:id="@+id/editTextCP"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/editTextVille"
-        android:text="Code Postale" />
+        android:hint="Code Postale" />
 
     <EditText
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
         android:layout_below="@+id/editTextAdresse"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="Ville" />
+        android:hint="Ville" />
 
     <Button
         android:layout_width="wrap_content"
@@ -62,10 +62,10 @@
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/editTextDescription"
-        android:text="Description"
-        android:layout_below="@+id/editTextCP"
+        android:hint="Description"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/editTextCP"
         android:layout_above="@+id/btnAddFavPlace" />
 
 </RelativeLayout>

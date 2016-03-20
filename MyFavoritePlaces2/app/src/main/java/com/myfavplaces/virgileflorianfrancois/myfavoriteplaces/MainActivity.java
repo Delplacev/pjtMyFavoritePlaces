@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnAddPlace;
     Button btnShowPlace;
     Button btnPower;
+    Button btnListe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         btnAddPlace = (Button)findViewById(R.id.btnAddPlace);
         btnShowPlace = (Button)findViewById(R.id.btnShowPlace);
         btnPower = (Button)findViewById(R.id.btnPower);
+        btnListe = (Button)findViewById(R.id.btnListeFav);
 
         btnAddPlace.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnListe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ShowFavPlace.class);
                 startActivity(intent);
             }
         });

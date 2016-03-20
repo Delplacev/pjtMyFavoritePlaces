@@ -25,7 +25,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ListView listAddr;
     MonAdapteur Monadapter;
     List<FavPlace> l;
-
+    private String idFavPlace ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +34,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                idFavPlace= null;
+            } else {
+                idFavPlace= extras.getString("FavPlaceSelected");
+            }
+        } else {
+            idFavPlace= (String) savedInstanceState.getSerializable("FavPlaceSelected");
+        }
+
+
 
 
 
@@ -53,6 +68,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -66,21 +87,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+
+
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(45, 56);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
 
         datasource = new FavPlaceDataSource(this);
         datasource.open();
 
-        List<FavPlace> values = datasource.getAllComments();
+        if(idFavPlace == null) {
+            List<FavPlace> values = datasource.getAllFavPlaces("");
+            this.l = new ArrayList(Arrays.asList(new FavPlace[]{}));
 
-        this.l = new ArrayList(Arrays.asList(new FavPlace[]{}));
-        for(int i=0; i<values.size(); i++) {
-            this.l.add(values.get(i));
-            LatLng sydneye = new LatLng(values.get(i).getLatitude(), values.get(i).getLongitude());
-            mMap.addMarker(new MarkerOptions().position(sydneye).title(values.get(i).getAdresseFavPlace()));
+            for (int i = 0; i < values.size(); i++) {
+                this.l.add(values.get(i));
+                LatLng pos = new LatLng(values.get(i).getLatitude(), values.get(i).getLongitude());
+                mMap.addMarker(new MarkerOptions().position(pos).title(values.get(i).getAdresseFavPlace() + " - " + values.get(i).getVilleAdresse()));
+            }
+        }  else {
+            System.out.println("extra : "+idFavPlace);
+            List<FavPlace> values = datasource.getFavPlace(idFavPlace);
+            this.l = new ArrayList(Arrays.asList(new FavPlace[]{}));
+            for (int i = 0; i < values.size(); i++) {
+                this.l.add(values.get(i));
+                LatLng pos = new LatLng(values.get(i).getLatitude(), values.get(i).getLongitude());
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos,13));
+                mMap.addMarker(new MarkerOptions().position(pos).title(values.get(i).getAdresseFavPlace() + " - " + values.get(i).getVilleAdresse()));
+            }
         }
 
     }
